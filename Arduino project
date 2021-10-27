@@ -1,3 +1,285 @@
-- 👋 Hi, I’m @Nono10062007
-- 👀 I’m interested in arduino, html,... 
-- 🌱 I’m currently learning arduino, html...
+
+ 
+
+ 
+
+Envoyé à partir de Courrier pour Windows
+
+#include <SPI.h>
+
+#include <MFRC522.h>
+
+#include <Servo.h>
+
+
+#define SS_PIN 10
+
+#define RST_PIN 9
+
+#define G A0
+
+#define C A1
+
+#define E A2
+
+#define F A3 
+
+#define GND A5
+
+#define GND1 A4
+
+#define GND2 4
+
+#define LED_R 3
+
+#define LED 7
+
+#define BUZZER 2
+
+MFRC522 mfrc522(SS_PIN, RST_PIN); 
+
+Servo myServo;
+
+ 
+
+void setup()
+
+{
+
+  Serial.begin(9600);  
+
+  SPI.begin();     
+
+  mfrc522.PCD_Init();  
+
+  myServo.attach(1);
+
+  myServo.write(0);
+
+  pinMode(G, OUTPUT);
+
+  pinMode(C, OUTPUT);
+
+  pinMode(E, OUTPUT);
+
+  pinMode(F, OUTPUT);
+
+  pinMode(GND1, OUTPUT);
+
+  pinMode(GND , OUTPUT);
+
+  pinMode(GND2, OUTPUT);
+
+  pinMode(LED_R, OUTPUT);
+
+  pinMode(LED_R, OUTPUT);
+
+  pinMode(BUZZER, OUTPUT);
+
+ 
+
+}
+
+void loop()
+
+{
+
+
+  if ( ! mfrc522.PICC_IsNewCardPresent())
+
+  {
+
+    return;
+
+  }                                                                             
+
+ 
+
+ 
+
+  if ( ! mfrc522.PICC_ReadCardSerial())
+
+  {
+
+    return;
+
+  }
+
+                   
+
+  String content= "";
+
+  byte letter;
+
+  for (byte i = 0; i < mfrc522.uid.size; i++)
+
+  {
+
+   
+
+     content.concat(String(mfrc522.uid.uidByte[i] < 0x10 ? " 0" : " "));
+
+     content.concat(String(mfrc522.uid.uidByte[i], HEX));
+
+  }
+
+
+  content.toUpperCase();
+
+  if (content.substring(1) == "FA 1D C4 E9")//important you need to go in the little magnifying glass and change the UID(ID) in bracket because it is my
+
+                                            //important vous avez besoin d' aller dans la petite loupe et changer l'UID(ID) entre parenthèse car c'est le mien
+
+  {
+
+    digitalWrite(GND, LOW);
+
+    digitalWrite(LED, HIGH);
+
+    digitalWrite(G, HIGH);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(F, HIGH);
+
+    delay(300);
+
+    digitalWrite(GND, HIGH);
+
+    digitalWrite(LED, LOW);
+
+    digitalWrite(G, LOW);
+
+    digitalWrite(C, LOW);
+
+    digitalWrite(F, LOW);
+
+    digitalWrite(GND1, LOW);
+
+  
+
+ 
+
+    digitalWrite(LED, HIGH);
+
+    digitalWrite(E, HIGH);
+
+    digitalWrite(G, HIGH);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(F, HIGH);
+
+    digitalWrite(BUZZER, HIGH);
+
+    delay(300);
+
+    digitalWrite(LED, LOW);
+
+    digitalWrite(E, LOW);
+
+    digitalWrite(G, LOW);
+
+    digitalWrite(C, LOW);
+
+    digitalWrite(F, LOW);
+
+    digitalWrite(GND1, HIGH);
+
+    digitalWrite(GND2, LOW);
+
+ 
+
+    digitalWrite(G, HIGH);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(F, HIGH);
+
+    digitalWrite(BUZZER, LOW);
+
+    delay(700);
+
+    digitalWrite(G, LOW);
+
+    digitalWrite(C, LOW);
+
+    digitalWrite(F, LOW);
+
+    digitalWrite(GND2, HIGH);
+
+ 
+
+   
+
+   
+
+ 
+
+  }
+
+
+ else   {
+
+    digitalWrite(LED_R, HIGH);
+
+    digitalWrite(G, HIGH);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(E, HIGH);
+
+    digitalWrite(F, HIGH);
+
+    digitalWrite(GND, LOW);
+
+    delay(300);
+
+    digitalWrite(GND1, LOW);
+
+    digitalWrite(GND, HIGH);
+
+  
+
+    digitalWrite(G, LOW);
+
+    digitalWrite(LED_R, HIGH);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(E, HIGH);
+
+    digitalWrite(F, HIGH);
+
+    delay(300);
+
+    digitalWrite(LED_R, LOW);
+
+    digitalWrite(GND2, LOW);
+
+    digitalWrite(GND1, HIGH);
+
+    digitalWrite(G, LOW);
+
+    digitalWrite(C, HIGH);
+
+    digitalWrite(E, LOW);
+
+    digitalWrite(F, LOW);
+
+    delay(700);
+
+    digitalWrite(GND2, HIGH);
+
+ 
+
+   
+
+  
+
+ 
+
+  }
+
+}
+
